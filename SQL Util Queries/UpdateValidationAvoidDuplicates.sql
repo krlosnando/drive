@@ -9,39 +9,39 @@ BEGIN
 			[ModifiedBy] = @UserSOEID,
 			[ModifiedDate] = GETDATE()
 		WHERE 
-			[ID] = @IDDelegate
+			[ID] = @IDDelegateClientGrid
 	END
 	ELSE
 	BEGIN
-		SELECT @IDExistingDelete = (SELECT S.ID FROM [dbo].[FROU_tblSecurityDelegate] S WHERE S.[SOEID] = @SOEID ) --AND [ManagerSOEID] = @UserSOEID
+		SELECT @IDDeleteExistingInDB = (SELECT S.ID FROM [dbo].[FROU_tblSecurityDelegate] S WHERE S.[SOEID] = @SOEID ) --AND [ManagerSOEID] = @UserSOEID
 		
 		--If user selects a existing Delegate, Do merge with Employees and delete duplicate row
 		UPDATE 
 			SDE
 		SET 
-			SDE.[IDDelegate] = @IDExistingDelete
+			SDE.[IDDelegate] = @IDDeleteExistingInDB
 		FROM
 			[dbo].[FROU_tblSecurityDelegateXEmployee] SDE
 		WHERE 
-			SDE.[IDDelegate] = @IDDelegate AND
+			SDE.[IDDelegate] = @IDDelegateClientGrid AND
 
 			--Avoid duplicate Employees to one Delegate
 			0 = (SELECT COUNT(1) AS ExistsEmployee 
 				 FROM [dbo].[FROU_tblSecurityDelegateXEmployee] TSDE
-				 WHERE TSDE.SOEID = SDE.[SOEID] AND TSDE.[IDDelegate] = @IDExistingDelete)
+				 WHERE TSDE.SOEID = SDE.[SOEID] AND TSDE.[IDDelegate] = @IDDeleteExistingInDB)
 				 
 		--Delete employees of duplicate delegate
 		DELETE FROM
 			[dbo].[FROU_tblSecurityDelegateXEmployee]
 		WHERE
-			[IDDelegate] = @IDDelegate
+			[IDDelegate] = @IDDelegateClientGrid
 
 		--Delete delegate
 		DELETE FROM 
 			[dbo].[FROU_tblSecurityDelegate]
 		WHERE 
-			[ID] = @IDDelegate
+			[ID] = @IDDelegateClientGrid
 	END
 	
-	SELECT @IDNewRow = @IDDelegate
+	SELECT @IDNewRow = @IDDelegateClientGrid
 END
