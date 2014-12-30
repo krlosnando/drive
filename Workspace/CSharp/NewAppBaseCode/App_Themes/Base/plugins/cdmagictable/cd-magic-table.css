@@ -1,0 +1,117 @@
+﻿.W10{width: 10%;}
+.W20{width: 20%;}
+.W30{width: 30%;}
+.W40{width: 40%;}
+.W50{width: 50%;}
+.W60{width: 60%;}
+.W70{width: 70%;}
+.W80{width: 80%;}
+.W90{width: 90%;}
+.W100{width: 100%;}
+
+.magic-table-scroll * {
+    scrollbar-arrow-color: #748FF7 !important;
+    scrollbar-base-color: #C0CCE2 !important;
+    scrollbar-track-color: #DDE4F0 !important;
+    scrollbar-face-color: #BDC9F7 !important;
+    scrollbar-highlight-color: #BDC9F7 !important;
+    scrollbar-3dlight-color: #BDC9F7 !important;
+    scrollbar-darkshadow-color: #BDC9F7 !important;
+    scrollbar-shadow-color: #BDC9F7 !important;
+}
+
+.magic-table-content
+{
+    max-height:500px;
+    overflow-x:scroll;
+    height:expression( this.scrollHeight > 500 ? '500px' : 'auto' );  
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(203, 201, 239);
+}
+
+/*Form Styles*/
+.magic-table-form-group-title
+{
+	padding-left: 10px;
+	font-size: 15px;
+	font-weight: normal;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	color: rgb(33, 0, 138);
+	background-color: rgb(233, 235, 236);
+}
+
+.magic-table-form-label{
+	background-color: #FFFFFF;
+	border: 1px solid #dedbef;
+	color: #007585;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.magic-table-form-item{
+	background-color: #FFFFFF;
+	border: 1px solid #dedbef;
+	color: #000000;
+	padding: 5px;
+}
+
+input[type="checkbox"], input[type="radio"]
+{
+	cursor: pointer;
+}
+
+/*Grid Styles*/
+.GridviewScrollHeader TH, .GridviewScrollHeader TD 
+{ 
+	padding: 5px; 
+	font-weight: normal; 
+	/*white-space: pre-wrap; */
+	text-align: left; 
+	vertical-align: bottom; 
+	word-wrap: break-word;
+	-ms-word-wrap: break-word;
+	background-color: rgb(221, 228, 240) !important;
+} 
+.GridviewScrollItem TD 
+{ 
+	padding: 5px; 
+	/*white-space: pre-wrap;*/
+	word-wrap: break-word;
+	-ms-word-wrap: break-word;
+} 
+.GridviewScrollPager  
+{ 
+	border-top: 1px solid #AAAAAA; 
+} 
+.GridviewScrollPager TD 
+{ 
+	padding-top: 3px; 
+	font-size: 14px; 
+	padding-left: 5px; 
+	padding-right: 5px; 
+} 
+.GridviewScrollPager A 
+{ 
+	color: #666666; 
+}
+.GridviewScrollPager SPAN
+
+{
+	font-size: 16px;
+	font-weight: bold;
+}
+.selected
+{
+	background-color: rgb(209, 248, 178) !important;    
+}
+
+.popup-report
+{
+	max-height: 450px;
+	overflow: auto;
+	background-color: white;
+	margin: auto;
+}
+

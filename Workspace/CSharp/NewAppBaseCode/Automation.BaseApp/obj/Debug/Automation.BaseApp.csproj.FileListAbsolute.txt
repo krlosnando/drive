@@ -1,0 +1,11 @@
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Automation.BaseApp.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Automation.BaseApp.pdb
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\AjaxControlToolkit.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\obj\Debug\Automation.BaseApp.dll
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\obj\Debug\Automation.BaseApp.pdb
+C:\Users\CD25867\Documents\GitProyects\ARE.Intercompany\Automation.BaseApp\obj\Debug\Automation.BaseApp.csprojResolveAssemblyReference.cache

@@ -1,0 +1,202 @@
+/*!
+ * jQuery Post-Comment Plugin v.1.0
+ * created [2013-02-26 17:49 AM]
+ * TODO: Documentation
+ *
+ * Copyright 2013, hendra@kunchy.com or henyana@gmail.com
+ * http://www.abelware.com
+ */
+.clear{
+	clear: both;
+}
+
+.comments-display{
+
+}
+
+.comments-display .dot{
+	padding: 0 3px;
+	font-size: 75%;
+	color: #CCC;
+	line-height: 1.4;
+}
+
+.comments-display .in-reply-to{
+	display:inline-block;
+}
+
+.comments-display .in-reply-to .ui-icon{
+	height:15px;
+}
+
+.comments-display .comment-length{
+	font-weight:bold;
+	padding-bottom:7px;
+}
+
+.comments-display .posted-comments-postbox {
+	padding-top:3px;
+	border-bottom:2px solid #F0F0F0;
+}
+
+ul.posted-comments {
+	list-style: none;
+	margin: 0;
+}
+
+ul.posted-comments li {
+	padding:10px 0 0;
+	border-top:1px solid #F0F0F0;
+}
+
+.avatar img{
+	width:28px;
+	height:28px;
+}
+
+.posted-comments-postbox .avatar{
+
+}
+
+.posted-comments-postbox .form{
+	margin-left: 10px;
+	min-width: 85%;
+}
+
+.posted-comments-postbox textarea, .posted-comment-form-edit textarea{
+	min-width:98%;
+}
+
+.posted-comment-container{
+	margin-left: 10px;
+	min-width:85%;
+}
+
+.posted-comment-container .posted-comment-head{
+	font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    display: inline;
+}
+
+.posted-comment-container .posted-comment-head span{
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.posted-comment-container .posted-comment-head .posted-comment-author{
+	font-weight:bold;
+}
+
+.posted-comment-container .posted-comment-foot{
+	color:#F0F0F0;
+}
+
+.posted-comment-container .posted-comment-foot span a{
+	color: rgb(0, 136, 204);
+    font-size: 11px;
+    line-height: 20px;
+}
+
+ul.posted-comment-childs{
+	list-style: none;
+	margin-left:40px;
+	padding-top:7px;
+}
+
+ul.posted-comment-childs .avatar img{
+	width:22px;
+	height:22px;
+}
+
+.comment-container
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.comment-container * .pull-left
+{
+    float: left;
+}
+
+.comment-container * form
+{
+    margin: 0 0 20px;
+}
+.comment-container * .posted-comment-txt
+{
+    display: block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+}
+.comment-container * textarea
+{
+    -webkit-appearance: none;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+    -webkit-rtl-ordering: logical;
+    -webkit-transition-delay: 0s, 0s;
+    -webkit-transition-duration: 0.2s, 0.2s;
+    -webkit-transition-property: border, box-shadow;
+    -webkit-transition-timing-function: linear, linear;
+    -webkit-user-select: text;
+    -webkit-writing-mode: horizontal-tb;
+    background-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(204, 204, 204);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: rgb(204, 204, 204);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: rgb(204, 204, 204);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: rgb(204, 204, 204);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+    color: rgb(85, 85, 85);
+    cursor: auto;
+    display: inline-block;
+    flex-direction: column;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: 40px;
+    letter-spacing: normal;
+    line-height: 20px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    min-width: 98%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    resize: both;
+    text-align: start;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    transition-delay: 0s, 0s;
+    transition-duration: 0.2s, 0.2s;
+    transition-property: border, box-shadow;
+    transition-timing-function: linear, linear;
+    vertical-align: middle;
+    white-space: pre-wrap;
+    width: 100%;
+    word-spacing: 0px;
+    word-wrap: break-word;
+}
