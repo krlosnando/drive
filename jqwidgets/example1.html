@@ -1,0 +1,282 @@
+<script type="text/javascript">
+        $(document).ready(function () {
+            var config = {
+                // Large Data Set / Virtual Paging / Virtual Scrolling / Server Paging / Server Scrolling
+                widgets: {
+                    jqxListBox: {
+                        width: '15%'
+                    },
+                    jqxMenu: {
+                        itemclick: function (event, $jqxGrid) {
+                            var $jqxGrid = $(config.showTo);
+                            var args = event.args;
+                            //var rowindex = $(idGrid).jqxGrid('getselectedrowindex');
+                            var rowIndexes = $jqxGrid.jqxGrid('selectedrowindexes');
+                            var dataRecord = null;
+                            var commit = null;
+
+                            if ($.trim($(args).text()) == "Uncheck email to selected rows") {
+                                for (var i = 0; i < rowIndexes.length; i++) {
+                                    dataRecord = $jqxGrid.jqxGrid('getrowdata', rowIndexes[i]);
+                                    dataRecord.FlagEmail = false;
+                                    commit = $jqxGrid.jqxGrid('updaterow', rowIndexes[i], dataRecord);
+
+                                    console.log("Uncheck email to selected rows", dataRecord);
+                                }
+                            }
+
+                            if ($.trim($(args).text()) == "Check email to selected rows") {
+                                for (var i = 0; i < rowIndexes.length; i++) {
+                                    dataRecord = $jqxGrid.jqxGrid('getrowdata', rowIndexes[i]);
+                                    dataRecord.FlagEmail = true;
+                                    commit = $jqxGrid.jqxGrid('updaterow', rowIndexes[i], dataRecord);
+
+                                    console.log("Check email to selected rows", dataRecord);
+                                }
+                            }
+                        }
+                    }
+                },
+                sp: {
+                    Name: "[dbo].[INTER_spDefinitionList]"
+                },
+                options:{
+                    width: '81%',
+                    editable: true,
+                    selectionmode: 'multiplerowsextended'
+                },
+                source: {
+                    dataBinding: "Server Paging",
+                    pagesize: 50
+                },
+                columns: [
+                    {
+                        name: 'QtyComment', text: 'Messages', type: 'html', editable: false, width: 40, pinned: true, cellsrenderer: function (row, datafield, value) {
+                            return '<img style="margin-left: 2px; margin-top: 3px;" onclick="openModalComments()" height="20" width="20" src="../App_Themes/Base/images/comment.png"/>' + value;
+                        }
+                    },
+                    //{ name: 'ID', type: 'number' },
+                    //{ name: 'IDUniqueRow', type: 'number' },
+                    { name: 'FlagEmail', text: 'Email', type: 'bool', width: 45, editable: true, columntype: 'checkbox' },
+                    { name: 'HostRegion', text: 'REGION (HOST)', type: 'string', width: 120, editable: false },
+                    { name: 'HostCountry', text: 'COUNTRY (HOST)', type: 'string', width: 130, editable: false },
+                    { name: 'HostFROManaged', text: 'FRO-Managed? (HOST)', type: 'string', width: 165, editable: false },
+                    { name: 'HostContact', text: 'Contact (HOST)', type: 'string', editable: false },
+                    { name: 'HostCGM', text: 'CGM? (HOST)', type: 'string', editable: false },
+                    { name: 'LedgerUnit', text: 'Ledger Unit', type: 'number', editable: false },
+                    { name: 'LedgerUnitDescription', text: 'Ledger Unit Description', type: 'string', width: 250, editable: false },
+                    { name: 'AffiliateRegion', text: 'REGION (AFFILIATE)', type: 'string', editable: false },
+                    { name: 'AffiliateCountry', text: 'COUNTRY (AFFILIATE)', type: 'string', editable: false },
+                    { name: 'AffiliateFROManaged', text: 'FRO-Managed? (AFFILIATE)', type: 'string', editable: false },
+                    { name: 'AffiliateCountact', text: 'Contact (AFFILIATE)', type: 'string', editable: false },
+                    { name: 'AffiliateCGM', text: 'CGM? (AFFILIATE)', type: 'string', editable: false },
+                    { name: 'Affiliate', text: 'Affiliate', type: 'number', editable: false },
+                    { name: 'AffiliateDescription', text: 'Affiliate Description', type: 'string', width: 250, editable: false },
+                    { name: 'UnallocatedICE', text: 'Unallocated ICE', type: 'string', editable: false },
+                    { name: 'SelfMapped', text: 'Self Mapped', type: 'string', editable: false },
+                    { name: 'L3ID', text: 'L3_ID', type: 'string', editable: false },
+                    { name: 'HostFieldAmount', text: 'FIELD AMOUNT (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'AffiliateFieldAmount', text: 'FIELD AMOUNT (AFFILIATE)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InitialBreak', text: 'INITIAL BREAK', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InitialBreakABS', text: 'ABS (INITIAL BREAK)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InitialBreakThresh', text: 'ABOVE/BELOW THRESH (INITIAL BREAK)', type: 'string', editable: false },
+                    { name: 'HostIKL', text: 'IKL (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'HostCountOfIKL', text: 'COUNT OF IKL (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'AffiliateIKL', text: 'IKL (AFFILIATE)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InterimBreak', text: 'INTERIM BREAK', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InterimBreakABS', text: 'ABS (INTERIM BREAK)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'InterimBreakThresh', text: 'ABOVE/BELOW THRESH (INTERIM BREAK)', type: 'string', editable: false },
+                    { name: 'HostAvoidableTag', text: 'AVOIDABLE TAG (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'HostCountOfAvoidableTag', text: 'COUNT OF AVOIDABLE TAG (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'AffiliateAvoidableTag', text: 'AVOIDABLE TAG (AFFILIATE)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'Interim2Break', text: 'INTERIM 2 BREAK', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'Interim2BreakABS', text: 'ABS (INTERIM 2 BREAK)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'Interim2BreakThresh', text: 'ABOVE/BELOW THRESH (INTERIM 2 BREAK)', type: 'string', editable: false },
+                    { name: 'HostUnavoidableTag', text: 'UNAVOIDABLE TAG (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'HostCountOfUnavoidableTag', text: 'COUNT OF UNAVOIDABLE TAG (HOST)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'AffiliateUnavoidableTag', text: 'UNAVOIDABLE TAG (AFFILIATE)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'FinalBreak', text: 'FINAL BREAK', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'FinalBreakABS', text: 'ABS (FINAL BREAK)', type: 'number', editable: false, filtertype: 'number', cellsformat: 'c2' },
+                    { name: 'FinalBreakThresh', text: 'ABOVE/BELOW THRESH (FINAL BREAK)', type: 'string', editable: false },
+                    { name: 'Period', text: 'PERIOD', type: 'string', editable: false }//,
+                    //{ name: 'Month', type: 'number' },
+                    //{ name: 'Year', type: 'number' },
+                    //{ name: 'FileID', type: 'string' },
+                    //{ name: 'ModifiedBy', type: 'string' },
+                    //{ name: 'ModifiedDate', type: 'date' },
+                    //{ name: 'CreatedBy', type: 'string' },
+                    //{ name: 'CreatedDate', type: 'date' }
+                ]
+            };
+
+            //Grid 1
+            var initGrid1 = function () {
+                config.showTo = "#jqxGridSummaryAll";
+                config.widgets.jqxListBox.showTo = "#jqxListBoxSummaryAll";
+                config.widgets.jqxMenu.showTo = "#jqxMenuSummaryAll";
+                $.jqxGridApi.create(config);
+            }
+
+            //Grid 2
+            var initGrid2 = function () {
+                config.showTo = "#jqxGridSendEmail";
+                config.widgets.jqxListBox.showTo = "#jqxListBoxSendEmail";
+                config.widgets.jqxMenu.showTo = "#jqxMenuSendEmail";
+                $.jqxGridApi.create(config);
+            }
+
+            //Grid 3
+            var initGrid3 = function () {
+                config.showTo = "#jqxGridDontSendEmail";
+                config.widgets.jqxListBox.showTo = "#jqxListBoxDontSendEmail";
+                config.widgets.jqxMenu.showTo = "#jqxMenuDontSendEmail";
+                $.jqxGridApi.create(config);
+            }
+
+            // init widgets.
+            var initWidgets = function (tab) {
+                switch (tab) {
+                    case 0:
+                        initGrid1();
+                        break;
+                    case 1:
+                        initGrid2();
+                        break;
+                    case 2:
+                        initGrid3();
+                        break;
+                }
+            }
+            $('#jqxTabs').jqxTabs({
+                width: '100%',
+                height: 560,
+                initTabContent: initWidgets,
+                theme: 'energyblue'
+            });
+        });
+        
+        function openModalComments() {
+            createPopup({
+                title: "Comments",
+                body: "<div class='comment-container'></div>",
+                onSuccess: function () {
+                    $('div.comment-container').comment({
+                        title: 'Comments',
+                        url_get: 'articles/id/1/comments/list.txt',
+                        url_input: 'articles/id/1/comments/input',
+                        url_delete: 'articles/id/1/comments/delete',
+                        limit: 10,
+                        auto_refresh: false,
+                        refresh: 10000,
+                        transition: 'slideToggle'
+                    });
+                }
+            });
+        }
+    </script>
+    
+    <div class="titleMedium">Summary All</div>
+
+    <div style="padding-bottom:10px;">
+        <%--Select Year--%>
+        <asp:Label ID="lblYear" runat="server" Text="Year:"></asp:Label>
+        <asp:DropDownList ID="cboYear" runat="server" class="AutoWH">
+            <asp:ListItem Text="-- Select --" Value=""></asp:ListItem>
+        </asp:DropDownList>
+
+        <%--Select Month--%>
+        <asp:Label ID="lblMonth" runat="server" Text="Month:"></asp:Label>
+        <asp:DropDownList ID="cboMonth" runat="server" class="AutoWH">
+            <asp:ListItem Text="-- Select --" Value=""></asp:ListItem>
+            <asp:ListItem Text="January" Value="01"></asp:ListItem>
+            <asp:ListItem Text="February" Value="02"></asp:ListItem>
+            <asp:ListItem Text="March" Value="03"></asp:ListItem>
+            <asp:ListItem Text="April" Value="04"></asp:ListItem>
+            <asp:ListItem Text="May" Value="05"></asp:ListItem>
+            <asp:ListItem Text="June" Value="06"></asp:ListItem>
+            <asp:ListItem Text="July" Value="07"></asp:ListItem>
+            <asp:ListItem Text="August" Value="08"></asp:ListItem>
+            <asp:ListItem Text="September" Value="09"></asp:ListItem>
+            <asp:ListItem Text="October" Value="10"></asp:ListItem>
+            <asp:ListItem Text="November" Value="11"></asp:ListItem>
+            <asp:ListItem Text="December" Value="12"></asp:ListItem>
+        </asp:DropDownList>
+
+        <%--Button Load data--%>
+        <div class="customBtn" id="btnLoadData" style="vertical-align:middle; padding:2px; width: 148px;  cursor:pointer;">
+            Load data
+        </div>
+
+        <%--Button send emails--%>
+        <div class="customBtn" id="btnSendEmails" style="vertical-align:middle; padding:2px; width: 148px;  cursor:pointer;">
+            Send emails
+        </div>
+    </div>
+
+    <%--Tabs--%>
+    <div id='jqxTabs'>
+        <ul>
+            <li style="margin-left: 30px;">
+                Summary all
+            </li>
+            <li>
+                Send emails to
+            </li>
+            <li>
+                Don't send emails to
+            </li>
+        </ul>
+        <%--Tab Summary all--%>
+        <div style="overflow: hidden;">
+            <div id='jqxTabSummaryAll'>
+                <div style="margin-right: 20px; float: left;" id="jqxGridSummaryAll"></div>
+                <div style="float: left;" id="jqxListBoxSummaryAll"></div>
+                <div style="clear:both"></div>
+            </div>
+            <input id="jqxListBoxSummaryAllUncheckBtn" style="margin-top: 1px;float: right;margin-right: 5%;" type="button" class="jqx-button AutoWH" value="Uncheck All" />
+            <div id='jqxMenuSummaryAll'>
+                <ul>
+                    <li>Uncheck email to selected rows</li>
+                    <li>Check email to selected rows</li>
+                    <li>Send email reminder</li>
+                </ul>
+            </div>
+        </div>
+        <%--Tab Send emails to--%>
+        <div style="overflow: hidden;">
+            <div id='jqxTabSendEmail'>
+                <div style="margin-right: 20px; float: left;" id="jqxGridSendEmail"></div>
+                <div style="float: left;" id="jqxListBoxSendEmail"></div>
+                <div style="clear:both"></div>
+            </div>
+            <div id='jqxMenuSendEmail'>
+                <ul>
+                    <li>Uncheck email to selected rows</li>
+                    <li>Check email to selected rows</li>
+                    <li>Send email reminder</li>
+                </ul>
+            </div>
+        </div>
+        <%--Tab Don't send emails to--%>
+        <div style="overflow: hidden;">
+            <div id='jqxTabDontSendEmail'>
+                <div style="margin-right: 20px; float: left;" id="jqxGridDontSendEmail"></div>
+                <div style="float: left;" id="jqxListBoxDontSendEmail"></div>
+                <div style="clear:both"></div>
+            </div>
+            <div id='jqxMenuDontSendEmail'>
+                <ul>
+                    <li>Uncheck email to selected rows</li>
+                    <li>Check email to selected rows</li>
+                    <li>Send email reminder</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <%--<div id="jqxgrid"></div>--%>
+    <%--<div id='jqxWidget'>
+        <div style="margin-right: 20px; float: left;" id="jqxgrid"></div>
+        <div style="float: left;" id="jqxlistbox"></div>
+        <div style="clear:both"></div>
+    </div>--%>
