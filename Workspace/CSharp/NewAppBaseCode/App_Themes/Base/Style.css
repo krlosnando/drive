@@ -1165,3 +1165,9 @@ button.close {
 {
     padding: 4px;
 }
+
+.inter-block-table * td
+{
+    background-color: #EFEFEF;
+}
+

@@ -35,27 +35,19 @@ $.jqxGridApi.defaultOptions = {
     }
 };
     
-// Generate data for Virtual mode.
-$.jqxGridApi.generatedata = function (startindex, endindex) {
-    var data = {};
-    for (var i = startindex; i < endindex; i++) {
-        data[i] = pcurrentGrid.localStorage[i];
-    }
-    return data;
-};
-
-// Load virtual data.
-$.jqxGridApi.rendergridrows = function (params) {
-    var data = $.jqxGridApi.generatedata(params.startindex, params.endindex);
-    return data;
-};
-
 // Create the grid in the interface
 $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
     // Prepare the data and configuration
     var source = null;
     var jqxGridOptions = {};
     var pconfiguration = pcurrentGrid["configuration"];
+    var fnRenderGridRows = function (params) {
+        var data = {};
+        for (var i = params.startindex; i < params.endindex; i++) {
+            data[i] = pcurrentGrid.localStorage[i];
+        }
+        return data;
+    }
 
     switch (pconfiguration.source.dataBinding) {
         //Data Binding Large Data Set Mode
@@ -65,6 +57,13 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
                 //Data field's type. Possible values: 'string', 'date', 'number', 'float', 'int', 'bool'.
                 datafields: pcurrentGrid.datafields,
                 datatype: "array"
+            };
+
+            jqxGridOptions = {
+                showfilterrow: true,
+                filterable: true,
+                sortable: true,
+                autoheight: true
             };
             break;
 
@@ -81,7 +80,7 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
                 virtualmode: true,
                 pageable: true,
                 pagermode: 'simple',
-                rendergridrows: $.jqxGridApi.rendergridrows
+                rendergridrows: fnRenderGridRows
             };
             break;
 
@@ -95,7 +94,7 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
 
             jqxGridOptions = {
                 virtualmode: true,
-                rendergridrows: $.jqxGridApi.rendergridrows
+                rendergridrows: fnRenderGridRows
             };
             break;
 
@@ -221,7 +220,23 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
     jqxGridOptions.columns = pcurrentGrid.columns;
     jqxGridOptions.theme = pconfiguration.options.theme;
     jqxGridOptions.columnsresize = true;
-    //jqxGridOptions.autoshowfiltericon = true,
+    //jqxGridOptions.autoshowfiltericon = true;
+
+    //Filter row
+    if (pconfiguration.options.showfilterrow) {
+        jqxGridOptions.filterable = true;
+        jqxGridOptions.showfilterrow = true;
+    }
+    
+    //Auto Row Height
+    if (typeof pconfiguration.options.autorowheight != "undefined") {
+        jqxGridOptions.autorowheight = pconfiguration.options.autorowheight;
+    }
+
+    //Auto Height
+    if (typeof pconfiguration.options.autoheight != "undefined") {
+        jqxGridOptions.autoheight = pconfiguration.options.autoheight;
+    }
 
     //Selection Mode
     if (pconfiguration.options.selectionmode) {
@@ -234,6 +249,7 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
         jqxGridOptions.editmode = 'selectedrow';
     }
 
+    console.log(jqxGridOptions);
     $(pconfiguration.showTo).jqxGrid(jqxGridOptions);
 
     //Create Hide and Show col Widget
@@ -261,29 +277,15 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
             $(idGrid).jqxGrid('endupdate');
         });
 
-        //Uncheck All
-        var idBtnUncheck = pconfiguration.widgets.jqxListBox.showTo + "UncheckBtn";
-        $(idBtnUncheck).click(function () {
-            var items = $(idJqxListBox).jqxListBox('getItems');
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].label != "Ledger Unit" &&
-                    items[i].label != "Ledger Unit Description" &&
-                    items[i].label != "Affiliate" &&
-                    items[i].label != "Affiliate Description" &&
-                    items[i].label != "INITIAL BREAK" &&
-                    items[i].label != "ABS (INTERIM BREAK)" &&
-                    items[i].label != "FINAL BREAK" &&
-                    items[i].label != "ABS (FINAL BREAK)" &&
-                    items[i].label != "ABOVE/BELOW THRESH (FINAL BREAK)") {
-
-                    $(idJqxListBox).jqxListBox('uncheckIndex', i);
-                }
-            }
-        });
+        //Uncheck button configuration
+        if (pconfiguration.widgets.jqxListBox.btnUncheckID) {
+            var idBtnUncheck = pconfiguration.widgets.jqxListBox.btnUncheckID;
+            $(idBtnUncheck).click(pconfiguration.widgets.jqxListBox.btnUncheckClick);
+        }
     }
 
     //Create Context Menu
-    if (pconfiguration.widgets.jqxMenu.showTo) {
+    if (pconfiguration.widgets.jqxMenu && pconfiguration.widgets.jqxMenu.showTo) {
         pcurrentGrid.contextMenu = $(pconfiguration.widgets.jqxMenu.showTo).jqxMenu({
             width: '100%',
             //height: 60,
@@ -314,8 +316,6 @@ $.jqxGridApi.generateJqxGrid = function (pcurrentGrid) {
 $.jqxGridApi.create = function (pconfiguration) {
     var allOk = true;
     var message = "";
-
-    
 
     //Hacer un merge con las opciones que nos enviaron y las default.
     _mergeObject($.jqxGridApi.defaultOptions, pconfiguration);
